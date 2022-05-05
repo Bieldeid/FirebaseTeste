@@ -14,20 +14,53 @@
       
         // Your web app's Firebase configuration
         const firebaseConfig = {
-          apiKey: "AIzaSyBvkbaj4iYh8E7LOnVQ5wJg20UDQ1p0yPE",
-          authDomain: "teste-c42c4.firebaseapp.com",
-          projectId: "teste-c42c4",
-          storageBucket: "teste-c42c4.appspot.com",
-          messagingSenderId: "606773821658",
-          appId: "1:606773821658:web:cb80f89c8782e863d0e5e3"
+          apiKey: "",
+          authDomain: "",
+          projectId: "",
+          storageBucket: "",
+          messagingSenderId: "",
+          appId: ""
         };
       
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
+        console.dir(app);
+
+        const auth = getAuth();
+        console.dir(auth);
+
+        //Function - Criar usuario
+        window.create_user = function(){//Atrelar função do window (nunca se perde, só se fechar a janela)
+          let uNome = window.document.getElementById("usernome").value;
+          let uEmail = window.document.getElementById("useremail").value;
+          let uPassword = window.document.getElementById("userpass").value;
+
+          console.log(uNome);
+          console.log(uEmail);
+          console.log(uPassword);
+
+          createUserWithEmailandPassword(auth, uNome, uEmail, uPassword)
+            .then((userCredential) => {
+              //Singed in
+              const user = userCredential.user;
+            })
+            .catch((error) => {
+              const errorCode = error.code;
+              const errorMessage = error.message;
+              // .. 
+            })
+        }
       </script>
 </head>
 <body>
-    
+    <h1>Cadastro</h1>
+    <input type="text" placeholder="Nome" id="usernome">
+    <br>
+    <input type="email" placeholder="Email" id="useremail">
+    <br>
+    <input type="password" placeholder="Senha" id="userpass">
+    <br>
+    <input type="submit" onclick ="window.create_user()">
 </body>
 </html>
 
