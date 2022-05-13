@@ -3,32 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    <script src="fbconfig.js"></script>
+    <title>Meeting Firebase</title>
+
+
 
     <script type="module">
         // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.7.0/firebase-app.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-auth.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-firestore.js";
         // TODO: Add SDKs for Firebase products that you want to use
         // https://firebase.google.com/docs/web/setup#available-libraries
       
         // Your web app's Firebase configuration
-        const firebaseConfig = {
-          apiKey: "",
-          authDomain: "",
-          projectId: "",
-          storageBucket: "",
-          messagingSenderId: "",
-          appId: ""
-        };
+        
       
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         console.dir(app);
 
+
+        //Conecto ao sistema de autenticacao
         const auth = getAuth();
         console.dir(auth);
+
+        const db = getFirestore(app);
+        console.dir(db);
+
+        //db features
+        window.inserir_usuario = async function (){
+          try{
+            const docRef = await addDoc(collection(db, "users"), {
+              first: "Richard",
+              last: "Stall",
+              born: "???"
+            });
+            console.log("Document written with ID: ", docRef.id);
+          } catch (e) {
+            console.error("Error adding document: ", e);
+          }
+        }
+
 
         //Function - Criar usuario
         window.create_user = function(){//Atrelar função do window (nunca se perde, só se fechar a janela)
@@ -61,7 +78,7 @@
     <br>
     <input type="password" placeholder="Senha" id="userpass">
     <br>
-    <input type="submit" onclick ="window.create_user()">
+    <input type="button" onclick ="window.create_user()" value="Enviar" >
 </body>
 </html>
 
